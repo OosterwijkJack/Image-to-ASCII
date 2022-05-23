@@ -8,6 +8,7 @@ character_list = character_list[::-1]
 MAX_SCALE = (200, 60)
 
 
+# Scales image by continuously dividing scale by 1.2 until within max scale
 def scale_img(img: Image.Image):
     while True:
         scale = img.size
@@ -19,6 +20,7 @@ def scale_img(img: Image.Image):
             return img
 
 
+#  Picks up jpg and png image
 def find_image():
     for i in os.listdir(os.getcwd() + "\Image"):
         if i.endswith('.jpg') or i.endswith('.png') or i.endswith(".PNG"):
@@ -30,6 +32,7 @@ image = Image.open(find_image())
 image = scale_img(image)
 
 
+#  Pixel average is used to find brightness of pixel
 def get_pixel_avg(pixels : list):
     total = 0
     for i in pixels:
@@ -37,6 +40,7 @@ def get_pixel_avg(pixels : list):
     return total/3
 
 
+#  places avg pixel data into array for each pixel
 def avg_pixels_to_array():
     array = []
     image_array = np.array(image.getdata())
@@ -45,6 +49,7 @@ def avg_pixels_to_array():
     return array
 
 
+#  loops through average pixel array and assigns ascii text according to pixel brightness
 def avg_to_ascii(pixels : list):
     array = []
     list_len = len(character_list)
@@ -60,8 +65,8 @@ def main():
     avg_pixels = avg_pixels_to_array()
     ascii_text = avg_to_ascii(avg_pixels)
 
+    #  Loops through ascii list and displays to console while moving to next line depending on original images x
     readable = ""
-    doodoo = ""
     for i in range(len(ascii_text)):
         if i % image.size[0] == 0:
             readable += '\n'
