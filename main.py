@@ -5,19 +5,7 @@ import os
 character_list = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,"^`' + "'. "
 character_list = character_list[::-1]
 
-MAX_SCALE = (200, 60)
-
-
-# Scales image by continuously dividing scale by 1.2 until within max scale
-def scale_img(img: Image.Image):
-    while True:
-        scale = img.size
-        if scale[0] > MAX_SCALE[0]:
-            img = img.resize((int(scale[0] // 1.2), scale[1]), Image.ANTIALIAS)
-        elif scale[1] > MAX_SCALE[1]:
-            img = img.resize((int(scale[0]), int(scale[1] // 1.2)), Image.ANTIALIAS)
-        else:
-            return img
+SCALE = (200, 60)
 
 
 #  Picks up jpg and png image
@@ -29,7 +17,7 @@ def find_image():
 
 
 image = Image.open(find_image())
-image = scale_img(image)
+image = image.resize((SCALE[0], SCALE[1]), Image.ANTIALIAS)
 
 
 #  Pixel average is used to find brightness of pixel
