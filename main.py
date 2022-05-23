@@ -30,10 +30,6 @@ image = Image.open(find_image())
 image = scale_img(image)
 
 
-def image_to_array():
-    return np.array(image.getdata())
-
-
 def get_pixel_avg(pixels : list):
     total = 0
     for i in pixels:
@@ -43,7 +39,7 @@ def get_pixel_avg(pixels : list):
 
 def avg_pixels_to_array():
     array = []
-    image_array = image_to_array()
+    image_array = np.array(image.getdata())
     for i in image_array:
         array.append(get_pixel_avg(i))
     return array
